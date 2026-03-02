@@ -1,5 +1,7 @@
 # Doc Forge
 
+<img src="assets/icons/Doc-Forge.png" alt="Imagen centrada" width="300" height="300">
+
 Generador de documentos PDF desde HTML y CSS personalizado. Aplicación web progresiva (PWA) que funciona completamente offline.
 
 ## Funcionalidades
