@@ -1,0 +1,27 @@
+{
+    "name": "Doc Forge — Generador de Documentos PDF",
+    "short_name": "Doc Forge",
+    "description": "Generador de documentos PDF con plantillas personalizables y vista previa en tiempo real",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#0B0D12",
+    "theme_color": "#13161C",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "assets/icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["productivity", "utilities"],
+    "lang": "es",
+    "dir": "ltr"
+}

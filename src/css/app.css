@@ -1,0 +1,1770 @@
+/* ============================================
+   DOC FORGE — Liquid Glass Dark Theme
+   Inspirado en macOS Tahoe Liquid Glass
+   Paleta: Negro #13161C, Violeta, Magenta, Verde #0AE98A
+   ============================================ */
+
+/* ============================================
+   FUENTES — Descargables para uso offline
+   Usamos system fonts elegantes por ahora.
+   En Fase 3 las reemplazamos por archivos locales.
+   ============================================ */
+/* --- Fuentes locales (offline) --- */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('../fonts/dm-sans-latin-300-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/dm-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/dm-sans-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/dm-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/dm-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/dm-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2');
+}
+
+/* ============================================
+   VARIABLES CSS — Paleta centralizada
+   Si cambias un color aquí, cambia en toda la app.
+   ============================================ */
+:root {
+    /* --- Colores base --- */
+    --bg-deep:          #0B0D12;
+    --bg-primary:       #13161C;
+    --bg-elevated:      #1A1D25;
+    --bg-surface:       #21242E;
+
+    /* --- Colores de acento --- */
+    --accent-green:     #0AE98A;
+    --accent-green-dim: rgba(10, 233, 138, 0.15);
+    --accent-green-glow:rgba(10, 233, 138, 0.3);
+    --accent-violet:    #8B5CF6;
+    --accent-violet-dim:rgba(139, 92, 246, 0.15);
+    --accent-magenta:   #E040FB;
+    --accent-magenta-dim:rgba(224, 64, 251, 0.12);
+
+    /* --- Texto --- */
+    --text-primary:     #F0F2F5;
+    --text-secondary:   #8B90A0;
+    --text-muted:       #555B6E;
+    --text-on-accent:   #0B0D12;
+
+    /* --- Liquid Glass --- */
+    --glass-bg:         rgba(30, 34, 46, 0.55);
+    --glass-bg-hover:   rgba(40, 45, 60, 0.65);
+    --glass-border:     rgba(255, 255, 255, 0.08);
+    --glass-border-hover:rgba(255, 255, 255, 0.14);
+    --glass-highlight:  rgba(255, 255, 255, 0.04);
+    --glass-blur:       16px;
+    --glass-blur-heavy: 24px;
+
+    /* --- Sombras --- */
+    --shadow-sm:        0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md:        0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg:        0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow-green:0 0 20px rgba(10, 233, 138, 0.25);
+    --shadow-glow-violet:0 0 20px rgba(139, 92, 246, 0.2);
+
+    /* --- Bordes --- */
+    --radius-sm:        8px;
+    --radius-md:        12px;
+    --radius-lg:        16px;
+    --radius-xl:        20px;
+
+    /* --- Tipografía --- */
+    --font-body:        'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono:        'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+
+    /* --- Transiciones --- */
+    --ease-smooth:      cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce:      cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration-fast:    150ms;
+    --duration-normal:  250ms;
+    --duration-slow:    400ms;
+
+    /* --- Layout --- */
+    --header-height:    56px;
+    --footer-height:    52px;
+}
+
+/* ============================================
+   TEMA CLARO — Se activa con [data-theme="light"]
+   ============================================ */
+[data-theme="light"] {
+    --bg-deep:          #F0F2F5;
+    --bg-primary:       #FFFFFF;
+    --bg-elevated:      #F8F9FA;
+    --bg-surface:       #EDF0F4;
+
+    --text-primary:     #1A1D25;
+    --text-secondary:   #555B6E;
+    --text-muted:       #8B90A0;
+
+    --glass-bg:         rgba(255, 255, 255, 0.65);
+    --glass-bg-hover:   rgba(255, 255, 255, 0.8);
+    --glass-border:     rgba(0, 0, 0, 0.08);
+    --glass-border-hover:rgba(0, 0, 0, 0.14);
+    --glass-highlight:  rgba(255, 255, 255, 0.5);
+
+    --shadow-sm:        0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md:        0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg:        0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Ajustes específicos del tema claro */
+[data-theme="light"] body::before {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(139, 92, 246, 0.06) 0%,
+        transparent 70%
+    );
+}
+
+[data-theme="light"] body::after {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(10, 233, 138, 0.04) 0%,
+        transparent 70%
+    );
+}
+
+[data-theme="light"] .app-header {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="light"] .app-footer {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme="light"] .panel-editor {
+    background: rgba(245, 247, 250, 0.5);
+}
+
+[data-theme="light"] .panel-preview {
+    background: rgba(235, 238, 243, 0.4);
+}
+
+[data-theme="light"] .code-editor {
+    background: rgba(240, 242, 245, 0.8);
+    color: #6D28D9;
+}
+
+[data-theme="light"] .preview-area {
+    background-image:
+        linear-gradient(45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.03) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.03) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+[data-theme="light"] .app-header::after {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(139, 92, 246, 0.2) 30%,
+        rgba(10, 233, 138, 0.15) 70%,
+        transparent
+    );
+}
+
+[data-theme="light"] .app-footer::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(10, 233, 138, 0.1) 30%,
+        rgba(224, 64, 251, 0.08) 70%,
+        transparent
+    );
+}
+
+[data-theme="light"] .editor-section {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="light"] .editor-section::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+}
+
+[data-theme="light"] .template-select,
+[data-theme="light"] .visual-select,
+[data-theme="light"] .hf-input {
+    background: #FFFFFF;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .preview-header {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="light"] .panel-editor::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .visual-row input[type="range"] {
+    background: #DDE0E6;
+}
+
+[data-theme="light"] .visual-row input[type="range"]::-moz-range-track {
+    background: #DDE0E6;
+}
+
+[data-theme="light"] .hf-checkbox {
+    background: #DDE0E6;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- Fondo con gradiente ambiental (simula profundidad) --- */
+body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(139, 92, 246, 0.07) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(10, 233, 138, 0.05) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ============================================
+   LIQUID GLASS — Clase reutilizable
+   Esta es la base del efecto glass.
+   Se aplica a header, paneles, footer, botones.
+   ============================================ */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+    border: 1px solid var(--glass-border);
+    position: relative;
+}
+
+/* Reflejo especular superior (simula luz sobre el vidrio) */
+.glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ============================================
+   HEADER — Barra de navegación superior
+   ============================================ */
+.app-header {
+    height: var(--header-height);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(19, 22, 28, 0.75);
+    backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+/* Línea de brillo inferior del header */
+.app-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(139, 92, 246, 0.3) 30%,
+        rgba(10, 233, 138, 0.2) 70%,
+        transparent
+    );
+    pointer-events: none;
+}
+
+.app-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.app-logo h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent-green), var(--accent-violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.app-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+.app-nav {
+    display: flex;
+    gap: 8px;
+}
+
+/* ============================================
+   BOTONES — Sistema de botones glass
+   ============================================ */
+
+/* Botón base de navegación */
+.nav-btn {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-highlight);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-btn:active {
+    transform: scale(0.97);
+}
+
+/* Botón pequeño (limpiar, restaurar, zoom) */
+.btn-small {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.btn-small:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border-color: var(--glass-border-hover);
+}
+
+.btn-small:active {
+    transform: scale(0.95);
+}
+
+/* Botones de acción (footer) */
+.action-btn {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn.primary {
+    background: linear-gradient(135deg, var(--accent-green), #06C270);
+    color: var(--text-on-accent);
+    box-shadow: var(--shadow-sm), var(--shadow-glow-green);
+}
+
+.action-btn.primary:hover {
+    box-shadow: var(--shadow-md), 0 0 30px rgba(10, 233, 138, 0.35);
+    transform: translateY(-1px);
+}
+
+.action-btn.primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Brillo interior del botón primary */
+.action-btn.primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    pointer-events: none;
+}
+
+.action-btn.secondary {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+}
+
+.action-btn.secondary:hover {
+    background: var(--glass-bg-hover);
+    color: var(--text-primary);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   MAIN — Área de trabajo principal
+   ============================================ */
+.app-main {
+    flex: 1;
+    display: flex;
+    gap: 1px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* ============================================
+   PANEL IZQUIERDO — Editor
+   ============================================ */
+.panel-editor {
+    width: 45%;
+    min-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px;
+    overflow-y: auto;
+    background: rgba(19, 22, 28, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Scrollbar personalizada estilo glass */
+.panel-editor::-webkit-scrollbar {
+    width: 6px;
+}
+
+.panel-editor::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.panel-editor::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.panel-editor::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* --- Sección individual dentro del editor --- */
+.editor-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    border-radius: var(--radius-lg);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    transition: border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.editor-section:hover {
+    border-color: var(--glass-border-hover);
+}
+
+/* Reflejo especular en secciones */
+.editor-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.06),
+        transparent
+    );
+    pointer-events: none;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* --- Select (desplegable de plantillas) --- */
+.template-select {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    padding: 9px 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-smooth);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B90A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.template-select:hover {
+    border-color: var(--glass-border-hover);
+}
+
+.template-select:focus {
+    outline: none;
+    border-color: var(--accent-violet);
+    box-shadow: 0 0 0 3px var(--accent-violet-dim);
+}
+
+.template-select option {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+/* --- Textarea (editores de código) --- */
+.code-editor {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    background: rgba(11, 13, 18, 0.6);
+    color: var(--accent-green);
+    resize: vertical;
+    min-height: 140px;
+    transition: all var(--duration-normal) var(--ease-smooth);
+    tab-size: 2;
+}
+
+.code-editor:focus {
+    outline: none;
+    border-color: var(--accent-violet);
+    box-shadow: 0 0 0 3px var(--accent-violet-dim),
+                inset 0 0 20px rgba(139, 92, 246, 0.03);
+}
+
+.code-editor::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* El editor HTML más grande que el CSS */
+#html-editor {
+    min-height: 180px;
+    flex: 1;
+}
+
+#css-editor {
+    min-height: 120px;
+}
+
+/* ============================================
+   PANEL DERECHO — Previsualizador
+   ============================================ */
+.panel-preview {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(11, 13, 18, 0.3);
+    position: relative;
+}
+
+.preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(19, 22, 28, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    flex-shrink: 0;
+}
+
+.preview-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.zoom-display {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    min-width: 40px;
+    text-align: center;
+}
+
+/* --- Área de vista previa --- */
+.preview-area {
+    flex: 1;
+    overflow: auto;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Patrón sutil de cuadrícula como Photoshop (indica transparencia) */
+    background-image:
+        linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.preview-area::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.preview-area::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+/* --- Página del documento (simula hoja de papel) --- */
+.page-content {
+    width: 216mm;
+    min-height: 279mm;
+    background: #FFFFFF;
+    color: #1a1a1a;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 12px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    position: relative;
+    transform-origin: top center;
+    transition: transform var(--duration-slow) var(--ease-smooth);
+    overflow: visible;
+    padding: 25mm;
+    font-family: var(--font-body);
+    font-size: 12pt;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Borde sutil que simula borde de hoja real */
+.page-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+.preview-placeholder {
+    color: #bbb;
+    font-style: italic;
+    text-align: center;
+    padding-top: 40%;
+}
+
+/* ============================================
+   FOOTER — Barra inferior
+   ============================================ */
+.app-footer {
+    height: var(--footer-height);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(19, 22, 28, 0.8);
+    backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(180%);
+    border-top: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+/* Línea de brillo superior del footer */
+.app-footer::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(10, 233, 138, 0.15) 30%,
+        rgba(224, 64, 251, 0.1) 70%,
+        transparent
+    );
+    pointer-events: none;
+}
+
+.footer-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.footer-info .separator {
+    color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+
+/* Aparición suave al cargar */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.editor-section {
+    animation: fadeInUp var(--duration-slow) var(--ease-smooth) both;
+}
+
+.editor-section:nth-child(1) { animation-delay: 50ms; }
+.editor-section:nth-child(2) { animation-delay: 100ms; }
+.editor-section:nth-child(3) { animation-delay: 150ms; }
+.editor-section:nth-child(4) { animation-delay: 200ms; }
+
+/* Pulso sutil para el botón de exportar PDF */
+@keyframes subtleGlow {
+    0%, 100% {
+        box-shadow: var(--shadow-sm), 0 0 15px rgba(10, 233, 138, 0.2);
+    }
+    50% {
+        box-shadow: var(--shadow-sm), 0 0 25px rgba(10, 233, 138, 0.35);
+    }
+}
+
+.action-btn.primary {
+    animation: subtleGlow 3s var(--ease-smooth) infinite;
+}
+
+.action-btn.primary:hover {
+    animation: none;
+}
+
+/* ============================================
+   ESTADOS INTERACTIVOS ADICIONALES
+   ============================================ */
+
+/* Focus visible (accesibilidad con teclado) */
+*:focus-visible {
+    outline: 2px solid var(--accent-violet);
+    outline-offset: 2px;
+}
+
+/* Selección de texto */
+::selection {
+    background: var(--accent-violet);
+    color: white;
+}
+
+
+/* ============================================
+   EDITOR VISUAL — Controles sin código
+   ============================================ */
+.visual-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.visual-editor.collapsed {
+    display: none;
+}
+
+.visual-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.visual-group-title {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.visual-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.visual-row label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    min-width: 80px;
+}
+
+/* --- Color pickers --- */
+.visual-row input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 28px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    cursor: pointer;
+    padding: 2px;
+    transition: border-color var(--duration-fast) var(--ease-smooth);
+}
+
+.visual-row input[type="color"]:hover {
+    border-color: var(--glass-border-hover);
+}
+
+.visual-row input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.visual-row input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+.visual-row input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+/* --- Select de fuentes --- */
+.visual-select {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    flex: 1;
+    max-width: 160px;
+    transition: border-color var(--duration-fast) var(--ease-smooth);
+}
+
+.visual-select:hover {
+    border-color: var(--glass-border-hover);
+}
+
+.visual-select:focus {
+    outline: none;
+    border-color: var(--accent-violet);
+    box-shadow: 0 0 0 2px var(--accent-violet-dim);
+}
+
+.visual-select option {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+/* --- Sliders (range inputs) --- */
+.visual-row input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    max-width: 140px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--bg-surface);
+    outline: none;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-smooth);
+}
+
+.visual-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-violet);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(139, 92, 246, 0.4);
+    transition: transform var(--duration-fast) var(--ease-smooth),
+                box-shadow var(--duration-fast) var(--ease-smooth);
+}
+
+.visual-row input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+}
+
+.visual-row input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-violet);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 6px rgba(139, 92, 246, 0.4);
+}
+
+.visual-row input[type="range"]::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--bg-surface);
+}
+
+/* Valor numérico junto al label */
+.visual-row label span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-green);
+}
+
+/* ============================================
+   ENCABEZADO Y PIE DE PÁGINA — Controles
+   ============================================ */
+.hf-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.hf-row label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    min-width: 70px;
+}
+
+.hf-input {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    flex: 1;
+    max-width: 180px;
+    transition: border-color var(--duration-fast) var(--ease-smooth);
+}
+
+.hf-input:hover {
+    border-color: var(--glass-border-hover);
+}
+
+.hf-input:focus {
+    outline: none;
+    border-color: var(--accent-violet);
+    box-shadow: 0 0 0 2px var(--accent-violet-dim);
+}
+
+.hf-input::placeholder {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+}
+
+/* Checkbox personalizado */
+.hf-checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.hf-checkbox::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.hf-checkbox:checked {
+    background: var(--accent-green-dim);
+    border-color: var(--accent-green);
+}
+
+.hf-checkbox:checked::before {
+    transform: translateX(16px);
+    background: var(--accent-green);
+}
+
+/* Estilos del encabezado/pie EN el documento */
+.doc-header, .doc-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8pt;
+    color: #888;
+    padding: 0 0 8px 0;
+    margin-bottom: 16px;
+}
+
+.doc-footer {
+    padding: 8px 0 0 0;
+    margin-bottom: 0;
+    margin-top: auto;
+}
+
+.doc-body {
+    flex: 1;
+}
+
+.doc-header.with-line {
+    border-bottom: 1px solid #ddd;
+}
+
+.doc-footer.with-line {
+    border-top: 1px solid #ddd;
+}
+
+.doc-hf-left, .doc-hf-center, .doc-hf-right {
+    flex: 1;
+}
+
+.doc-hf-center {
+    text-align: center;
+}
+
+.doc-hf-right {
+    text-align: right;
+}
+
+/* ============================================
+   FONDO Y MARCA — Controles del panel
+   ============================================ */
+.logo-upload-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.logo-preview-box {
+    width: 100%;
+    height: 70px;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--glass-border-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-smooth);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.logo-preview-box:hover {
+    border-color: var(--accent-violet);
+    background: var(--accent-violet-dim);
+}
+
+#logo-placeholder {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.logo-preview-img {
+    max-height: 60px;
+    max-width: 90%;
+    object-fit: contain;
+    display: none;
+}
+
+.logo-preview-img.visible {
+    display: block;
+}
+
+/* ============================================
+   FONDOS DEL DOCUMENTO — Dentro de la hoja
+   ============================================ */
+
+/* --- Contenedor del fondo (capa detrás del contenido) --- */
+.doc-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.doc-background + .doc-header,
+.doc-background ~ .doc-body,
+.doc-background ~ .doc-footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Logo en el documento --- */
+.doc-logo-area {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.doc-logo-area.pos-top-left {
+    top: 16mm;
+    left: 18mm;
+}
+
+.doc-logo-area.pos-top-center {
+    top: 16mm;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.doc-logo-area.pos-top-right {
+    top: 16mm;
+    right: 18mm;
+}
+
+.doc-logo-area img {
+    object-fit: contain;
+}
+
+/* Espacio entre el logo y el encabezado del documento en el preview y PNG */
+.doc-logo-area ~ .doc-header {
+    margin-top: 7mm;
+}
+
+.doc-brand-name {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+/* ============================================
+   FONDO: PROFESIONAL
+   Franja superior con gradiente, figuras
+   geométricas decorativas, líneas de acento.
+   ============================================ */
+.bg-profesional .bg-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6mm;
+    background: linear-gradient(135deg, var(--doc-color-primary), var(--doc-color-secondary));
+}
+
+.bg-profesional .bg-top-bar-shadow {
+    position: absolute;
+    top: 6mm;
+    left: 0;
+    right: 0;
+    height: 3mm;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.06), transparent);
+}
+
+.bg-profesional .bg-bottom-line {
+    position: absolute;
+    bottom: 12mm;
+    left: 25mm;
+    right: 25mm;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--doc-color-primary), transparent);
+    opacity: 0.4;
+}
+
+.bg-profesional .bg-corner-accent {
+    position: absolute;
+    bottom: 8mm;
+    right: 8mm;
+    width: 15mm;
+    height: 15mm;
+    border-right: 2px solid var(--doc-color-primary);
+    border-bottom: 2px solid var(--doc-color-primary);
+    opacity: 0.35;
+}
+
+/* Diamante decorativo superior derecho */
+.bg-profesional .bg-diamond-tr {
+    position: absolute;
+    top: 10mm;
+    right: 10mm;
+    width: 8mm;
+    height: 8mm;
+    border: 1px solid var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.45;
+}
+
+.bg-profesional .bg-diamond-tr-inner {
+    position: absolute;
+    top: 12mm;
+    right: 12mm;
+    width: 4mm;
+    height: 4mm;
+    background: var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.35;
+}
+
+/* Líneas horizontales sutiles */
+.bg-profesional .bg-line-1 {
+    position: absolute;
+    top: 8mm;
+    left: 8mm;
+    width: 20mm;
+    height: 0.3px;
+    background: var(--doc-color-primary);
+    opacity: 0.35;
+}
+
+.bg-profesional .bg-line-2 {
+    position: absolute;
+    top: 10mm;
+    left: 8mm;
+    width: 12mm;
+    height: 0.3px;
+    background: var(--doc-color-secondary);
+    opacity: 0.28;
+}
+
+/* Círculos decorativos esquina inferior izquierda */
+.bg-profesional .bg-circle-bl {
+    position: absolute;
+    bottom: 10mm;
+    left: 10mm;
+    width: 6mm;
+    height: 6mm;
+    border: 0.5px solid var(--doc-color-secondary);
+    border-radius: 50%;
+    opacity: 0.45;
+}
+
+.bg-profesional .bg-circle-bl-2 {
+    position: absolute;
+    bottom: 8mm;
+    left: 14mm;
+    width: 3mm;
+    height: 3mm;
+    background: var(--doc-color-secondary);
+    border-radius: 50%;
+    opacity: 0.35;
+}
+
+/* Patrón de cruces sutiles */
+
+/* ============================================
+   FONDO: EDUCATIVO
+   Barra lateral vibrante, figuras geométricas
+   flotantes, patrón de puntos, banda inferior.
+   ============================================ */
+.bg-educativo .bg-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 5mm;
+    background: linear-gradient(180deg, var(--doc-color-primary), var(--doc-color-secondary));
+}
+
+.bg-educativo .bg-sidebar-shadow {
+    position: absolute;
+    top: 0;
+    left: 5mm;
+    bottom: 0;
+    width: 3mm;
+    background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+}
+
+.bg-educativo .bg-bottom-band {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4mm;
+    background: linear-gradient(135deg, var(--doc-color-secondary), var(--doc-color-primary));
+    opacity: 0.85;
+}
+
+.bg-educativo .bg-dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, var(--doc-color-primary) 0.5px, transparent 0.5px);
+    background-size: 12mm 12mm;
+    background-position: 10mm 10mm;
+    opacity: 0.45;
+}
+
+/* Triángulo decorativo superior derecho */
+.bg-educativo .bg-triangle-tr {
+    position: absolute;
+    top: 8mm;
+    right: 8mm;
+    width: 0;
+    height: 0;
+    border-left: 5mm solid transparent;
+    border-right: 5mm solid transparent;
+    border-bottom: 8mm solid var(--doc-color-primary);
+    opacity: 0.35;
+}
+
+/* Círculo superior derecho */
+.bg-educativo .bg-circle-tr {
+    position: absolute;
+    top: 12mm;
+    right: 20mm;
+    width: 7mm;
+    height: 7mm;
+    border: 1px solid var(--doc-color-secondary);
+    border-radius: 50%;
+    opacity: 0.4;
+}
+
+.bg-educativo .bg-circle-tr-fill {
+    position: absolute;
+    top: 20mm;
+    right: 10mm;
+    width: 4mm;
+    height: 4mm;
+    background: var(--doc-color-secondary);
+    border-radius: 50%;
+    opacity: 0.28;
+}
+
+/* Cuadrado rotado inferior derecho */
+.bg-educativo .bg-square-br {
+    position: absolute;
+    bottom: 15mm;
+    right: 12mm;
+    width: 6mm;
+    height: 6mm;
+    border: 0.8px solid var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.4;
+}
+
+/* Estrella / asterisco central derecha */
+.bg-educativo .bg-star-r {
+    position: absolute;
+    top: 50%;
+    right: 8mm;
+    font-size: 14pt;
+    color: var(--doc-color-secondary);
+    opacity: 0.35;
+    transform: translateY(-50%);
+}
+
+/* Líneas de notebook en el sidebar */
+
+/* Hexágono izquierda */
+.bg-educativo .bg-hex-l {
+    position: absolute;
+    top: 40%;
+    left: 8mm;
+    width: 5mm;
+    height: 5mm;
+    background: var(--doc-color-primary);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    opacity: 0.45;
+}
+
+/* Pequeñas cruces dispersas */
+.bg-educativo .bg-cross-1 {
+    position: absolute;
+    top: 25%;
+    right: 15mm;
+    font-size: 8pt;
+    color: var(--doc-color-primary);
+    opacity: 0.35;
+}
+
+.bg-educativo .bg-cross-2 {
+    position: absolute;
+    top: 70%;
+    right: 20mm;
+    font-size: 6pt;
+    color: var(--doc-color-secondary);
+    opacity: 0.28;
+}
+
+/* ============================================
+   FONDO: ELEGANTE
+   Doble marco fino, ornamentos en esquinas,
+   figuras decorativas, medallón central.
+   ============================================ */
+.bg-elegante .bg-frame-outer {
+    position: absolute;
+    top: 6mm;
+    left: 6mm;
+    right: 6mm;
+    bottom: 6mm;
+    border: 0.5px solid var(--doc-color-primary);
+    opacity: 0.4;
+}
+
+.bg-elegante .bg-frame-inner {
+    position: absolute;
+    top: 8mm;
+    left: 8mm;
+    right: 8mm;
+    bottom: 8mm;
+    border: 0.3px solid var(--doc-color-primary);
+    opacity: 0.28;
+}
+
+/* Esquinas ornamentales con líneas cruzadas */
+.bg-elegante .bg-corner-tl,
+.bg-elegante .bg-corner-tr,
+.bg-elegante .bg-corner-bl,
+.bg-elegante .bg-corner-br {
+    position: absolute;
+    width: 14mm;
+    height: 14mm;
+    opacity: 0.4;
+}
+
+.bg-elegante .bg-corner-tl {
+    top: 5mm;
+    left: 5mm;
+    border-top: 1.5px solid var(--doc-color-primary);
+    border-left: 1.5px solid var(--doc-color-primary);
+}
+
+.bg-elegante .bg-corner-tr {
+    top: 5mm;
+    right: 5mm;
+    border-top: 1.5px solid var(--doc-color-primary);
+    border-right: 1.5px solid var(--doc-color-primary);
+}
+
+.bg-elegante .bg-corner-bl {
+    bottom: 5mm;
+    left: 5mm;
+    border-bottom: 1.5px solid var(--doc-color-primary);
+    border-left: 1.5px solid var(--doc-color-primary);
+}
+
+.bg-elegante .bg-corner-br {
+    bottom: 5mm;
+    right: 5mm;
+    border-bottom: 1.5px solid var(--doc-color-primary);
+    border-right: 1.5px solid var(--doc-color-primary);
+}
+
+/* Diamantes en las esquinas (dentro de los corners) */
+.bg-elegante .bg-corner-diamond-tl {
+    position: absolute;
+    top: 4mm;
+    left: 4mm;
+    width: 3mm;
+    height: 3mm;
+    border: 0.5px solid var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.4;
+}
+
+.bg-elegante .bg-corner-diamond-tr {
+    position: absolute;
+    top: 4mm;
+    right: 4mm;
+    width: 3mm;
+    height: 3mm;
+    border: 0.5px solid var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.4;
+}
+
+.bg-elegante .bg-corner-diamond-bl {
+    position: absolute;
+    bottom: 4mm;
+    left: 4mm;
+    width: 3mm;
+    height: 3mm;
+    border: 0.5px solid var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.4;
+}
+
+.bg-elegante .bg-corner-diamond-br {
+    position: absolute;
+    bottom: 4mm;
+    right: 4mm;
+    width: 3mm;
+    height: 3mm;
+    border: 0.5px solid var(--doc-color-primary);
+    transform: rotate(45deg);
+    opacity: 0.4;
+}
+
+/* Ornamento superior central */
+.bg-elegante .bg-ornament-top {
+    position: absolute;
+    top: 4.5mm;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 7pt;
+    letter-spacing: 3px;
+    color: var(--doc-color-primary);
+    opacity: 0.4;
+}
+
+/* Líneas horizontales decorativas */
+.bg-elegante .bg-line-top {
+    position: absolute;
+    top: 20mm;
+    left: 20mm;
+    right: 20mm;
+    height: 0.3px;
+    background: linear-gradient(90deg, transparent, var(--doc-color-primary) 20%, var(--doc-color-primary) 80%, transparent);
+    opacity: 0.4;
+}
+
+/* Medallón central inferior */
+.bg-elegante .bg-medallion {
+    position: absolute;
+    bottom: 9mm;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10mm;
+    height: 10mm;
+    border: 0.5px solid var(--doc-color-primary);
+    border-radius: 50%;
+    opacity: 0.28;
+}
+
+.bg-elegante .bg-medallion-inner {
+    position: absolute;
+    bottom: 10.5mm;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7mm;
+    height: 7mm;
+    border: 0.3px solid var(--doc-color-primary);
+    border-radius: 50%;
+    opacity: 0.45;
+}
+
+.bg-elegante .bg-medallion-diamond {
+    position: absolute;
+    bottom: 12mm;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 3mm;
+    height: 3mm;
+    background: var(--doc-color-primary);
+    opacity: 0.4;
+}
+
+/* Ornamento inferior */
+.bg-elegante .bg-center-ornament {
+    position: absolute;
+    bottom: 22mm;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8pt;
+    letter-spacing: 6px;
+    opacity: 0.28;
+    color: var(--doc-color-primary);
+}
+
+/* Línea vertical sutil derecha */
+.bg-elegante .bg-vertical-r {
+    position: absolute;
+    top: 25mm;
+    right: 10mm;
+    width: 0.3px;
+    height: 15mm;
+    background: var(--doc-color-primary);
+    opacity: 0.4;
+}
+
+/* Línea vertical sutil izquierda */
+.bg-elegante .bg-vertical-l {
+    position: absolute;
+    top: 25mm;
+    left: 10mm;
+    width: 0.3px;
+    height: 15mm;
+    background: var(--doc-color-primary);
+    opacity: 0.4;
+}

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doc Forge — Generador de Documentos PDF</title>
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13161C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+
+    <!-- Estilos de la app -->
+    <link rel="stylesheet" href="src/css/app.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR                 -->
+    <!-- ============================================ -->
+    <header class="app-header">
+        <div class="app-logo">
+            <h1>Doc Forge</h1>
+            <span class="app-subtitle">Generador de Documentos PDF</span>
+        </div>
+        <nav class="app-nav">
+            <button id="btn-new" class="nav-btn" title="Nuevo documento">
+                Nuevo
+            </button>
+            <button id="btn-save-draft" class="nav-btn" title="Guardar borrador">
+                Guardar borrador
+            </button>
+            <button id="btn-theme" class="nav-btn" title="Cambiar tema">
+                ☀ Claro
+            </button>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- CONTENIDO PRINCIPAL                          -->
+    <!-- ============================================ -->
+    <main class="app-main">
+
+        <!-- PANEL IZQUIERDO: Editores -->
+        <section class="panel-editor">
+
+            <!-- Selector de tamaño de página -->
+            <div class="editor-section">
+                <label for="page-size" class="section-label">
+                    Tamaño de página
+                </label>
+                <select id="page-size" class="template-select">
+                    <option value="letter">Carta (216 × 279 mm)</option>
+                    <option value="a4">A4 (210 × 297 mm)</option>
+                    <option value="legal">Oficio (216 × 356 mm)</option>
+                </select>
+            </div>
+
+            <!-- Editor HTML: donde el usuario pega contenido -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <label for="html-editor" class="section-label">
+                        Contenido HTML
+                    </label>
+                    <button id="btn-clear-html" class="btn-small" title="Limpiar editor">
+                        Limpiar
+                    </button>
+                </div>
+                <textarea 
+                    id="html-editor" 
+                    class="code-editor" 
+                    placeholder="Pega aquí el HTML con el contenido del documento..."
+                    spellcheck="false"
+                ></textarea>
+            </div>
+
+            <!-- Editor Visual: solo tipografía, interlineado y márgenes -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <label class="section-label">Tipografía y Espaciado</label>
+                    <button id="btn-toggle-visual" class="btn-small" title="Mostrar/ocultar">
+                        Ocultar
+                    </button>
+                </div>
+                <div id="visual-editor" class="visual-editor">
+
+                    <!-- Tipografía -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Tipografía</span>
+                        <div class="visual-row">
+                            <label for="ve-font-body">Párrafos</label>
+                            <select id="ve-font-body" class="visual-select">
+                                <option value="'DM Sans', sans-serif">DM Sans</option>
+                                <option value="Georgia, serif">Georgia</option>
+                                <option value="'Times New Roman', serif">Times New Roman</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="'Palatino Linotype', serif">Palatino</option>
+                                <option value="Verdana, sans-serif">Verdana</option>
+                                <option value="'Courier New', monospace">Courier New</option>
+                            </select>
+                        </div>
+                        <div class="visual-row">
+                            <label for="ve-font-headings">Títulos</label>
+                            <select id="ve-font-headings" class="visual-select">
+                                <option value="'DM Sans', sans-serif">DM Sans</option>
+                                <option value="Georgia, serif">Georgia</option>
+                                <option value="'Times New Roman', serif">Times New Roman</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="'Palatino Linotype', serif">Palatino</option>
+                                <option value="Verdana, sans-serif">Verdana</option>
+                                <option value="'Courier New', monospace">Courier New</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Espaciado -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Espaciado</span>
+                        <div class="visual-row">
+                            <label for="ve-line-height">Interlineado <span id="ve-line-height-val">1.7</span></label>
+                            <input type="range" id="ve-line-height" min="1.2" max="2.5" value="1.7" step="0.1">
+                        </div>
+                        <div class="visual-row">
+                            <label for="ve-margin">Márgenes <span id="ve-margin-val">25</span>mm</label>
+                            <input type="range" id="ve-margin" min="10" max="40" value="25" step="1">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Encabezado y Pie de Página -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <label class="section-label">Encabezado y Pie de Página</label>
+                    <button id="btn-toggle-hf" class="btn-small" title="Mostrar/ocultar">
+                        Ocultar
+                    </button>
+                </div>
+                <div id="header-footer-panel" class="visual-editor">
+
+                    <!-- Encabezado -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Encabezado</span>
+                        <div class="hf-row">
+                            <label for="hf-header-left">Izquierda</label>
+                            <input type="text" id="hf-header-left" class="hf-input" placeholder="Ej: Mi Empresa">
+                        </div>
+                        <div class="hf-row">
+                            <label for="hf-header-center">Centro</label>
+                            <input type="text" id="hf-header-center" class="hf-input" placeholder="Ej: Documento Oficial">
+                        </div>
+                        <div class="hf-row">
+                            <label for="hf-header-right">Derecha</label>
+                            <input type="text" id="hf-header-right" class="hf-input" placeholder="Ej: Confidencial">
+                        </div>
+                    </div>
+
+                    <!-- Pie de página -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Pie de Página</span>
+                        <div class="hf-row">
+                            <label for="hf-footer-left">Izquierda</label>
+                            <input type="text" id="hf-footer-left" class="hf-input" placeholder="Ej: Autor: JC-Dev">
+                        </div>
+                        <div class="hf-row">
+                            <label for="hf-footer-center">Centro</label>
+                            <input type="text" id="hf-footer-center" class="hf-input" placeholder="Ej: Página 1">
+                        </div>
+                        <div class="hf-row">
+                            <label for="hf-footer-right">Derecha</label>
+                            <input type="text" id="hf-footer-right" class="hf-input" placeholder="Ej: Marzo 2026">
+                        </div>
+                    </div>
+
+                    <!-- Opciones -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Opciones</span>
+                        <div class="hf-row">
+                            <label for="hf-show-line">Línea separadora</label>
+                            <input type="checkbox" id="hf-show-line" class="hf-checkbox" checked>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Fondo del documento y Logo -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <label class="section-label">Fondo y Marca</label>
+                    <button id="btn-toggle-bg" class="btn-small" title="Mostrar/ocultar">
+                        Ocultar
+                    </button>
+                </div>
+                <div id="bg-panel" class="visual-editor">
+
+                    <!-- Selector de fondo -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Fondo del documento</span>
+                        <div class="visual-row">
+                            <label for="bg-selector">Diseño</label>
+                            <select id="bg-selector" class="visual-select" style="max-width:180px">
+                                <option value="none">Sin fondo</option>
+                                <option value="profesional">Profesional</option>
+                                <option value="educativo">Educativo</option>
+                                <option value="elegante">Elegante</option>
+                            </select>
+                        </div>
+                        <div class="visual-row">
+                            <label for="bg-color-primary">Color primario</label>
+                            <input type="color" id="bg-color-primary" value="#8B5CF6">
+                        </div>
+                        <div class="visual-row">
+                            <label for="bg-color-secondary">Color secundario</label>
+                            <input type="color" id="bg-color-secondary" value="#0AE98A">
+                        </div>
+                    </div>
+
+                    <!-- Logo -->
+                    <div class="visual-group">
+                        <span class="visual-group-title">Logo / Marca personal</span>
+                        <div class="logo-upload-area">
+                            <div class="logo-preview-box" id="logo-preview-box">
+                                <span id="logo-placeholder">Haz clic para subir tu logo</span>
+                                <img id="logo-preview-img" class="logo-preview-img" alt="Logo">
+                            </div>
+                            <input type="file" id="logo-upload" accept="image/png, image/jpeg, image/svg+xml, image/webp" hidden>
+                        </div>
+                        <div class="visual-row">
+                            <label for="logo-position">Posición</label>
+                            <select id="logo-position" class="visual-select" style="max-width:180px">
+                                <option value="top-left">Arriba izquierda</option>
+                                <option value="top-center">Arriba centro</option>
+                                <option value="top-right">Arriba derecha</option>
+                            </select>
+                        </div>
+                        <div class="visual-row">
+                            <label for="logo-size">Tamaño <span id="logo-size-val">40</span>px</label>
+                            <input type="range" id="logo-size" min="20" max="80" value="40" step="2">
+                        </div>
+                        <div class="visual-row">
+                            <label for="brand-name">Nombre de marca</label>
+                            <input type="text" id="brand-name" class="hf-input" placeholder="Ej: Profe Jader" value="Profe Jader">
+                        </div>
+                        <div class="visual-row">
+                            <label for="brand-show">Mostrar nombre</label>
+                            <input type="checkbox" id="brand-show" class="hf-checkbox" checked>
+                        </div>
+                        <div class="visual-row">
+                            <label for="logo-remove">Logo</label>
+                            <button id="logo-remove" class="btn-small">Quitar logo</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Editor CSS: para personalizar estilos -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <label for="css-editor" class="section-label">
+                        Estilos CSS personalizados
+                    </label>
+                    <button id="btn-clear-css" class="btn-small" title="Limpiar CSS">
+                        Limpiar
+                    </button>
+                </div>
+                <textarea 
+                    id="css-editor" 
+                    class="code-editor" 
+                    placeholder="Escribe CSS personalizado para dar estilo al documento..."
+                    spellcheck="false"
+                ></textarea>
+            </div>
+
+        </section>
+
+        <!-- PANEL DERECHO: Previsualizador -->
+        <section class="panel-preview">
+            <div class="preview-header">
+                <span class="section-label">Vista previa</span>
+                <div class="preview-controls">
+                    <button id="btn-zoom-out" class="btn-small" title="Reducir zoom">
+                        −
+                    </button>
+                    <span id="zoom-level" class="zoom-display">100%</span>
+                    <button id="btn-zoom-in" class="btn-small" title="Aumentar zoom">
+                        +
+                    </button>
+                </div>
+            </div>
+            <div id="preview-container" class="preview-area">
+                <div id="preview-page" class="page-content">
+                    <p class="preview-placeholder">
+                        El documento aparecerá aquí cuando pegues el HTML...
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================ -->
+    <!-- BARRA INFERIOR: Acciones de exportación      -->
+    <!-- ============================================ -->
+    <footer class="app-footer">
+        <div class="footer-info">
+            <span id="char-count">0 caracteres</span>
+        </div>
+        <div class="footer-actions">
+            <button id="btn-export-png" class="action-btn secondary" title="Exportar como imagen">
+                Exportar PNG
+            </button>
+            <button id="btn-export-pdf" class="action-btn primary" title="Exportar como PDF">
+                Exportar PDF
+            </button>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS                                      -->
+    <!-- ============================================ -->
+    <!-- Librerías externas (offline) -->
+    <script src="src/js/html2canvas.min.js"></script>
+    <script src="src/js/jspdf.umd.min.js"></script>
+
+    <!-- Lógica de la app -->
+    <script src="src/js/visual-editor.js"></script>
+    <script src="src/js/header-footer.js"></script>
+    <script src="src/js/background-manager.js"></script>
+    <script src="src/js/pdf-export.js"></script>
+    <script src="src/js/app.js"></script>
+
+</body>
+</html>
