@@ -156,8 +156,9 @@ function buildPageHTML(opt) {
             + opt.headerHTML + '</div>';
     }
 
-    // Contenido: max-height limita exactamente al slice de esta página,
-    // evitando que contenido de la página siguiente sea visible.
+    // Contenido: max-height limita exactamente al slice de esta página.
+    // El safetyBuffer (10px) en los break points ya compensa las diferencias
+    // entre medición y renderizado, así que no se necesita buffer adicional aquí.
     var contentH = opt.sliceEnd - opt.contentOffset;
     html += '<div style="flex:1; max-height:' + contentH + 'px; overflow:hidden;">'
         + '<div style="margin-top:-' + opt.contentOffset + 'px;">'
@@ -308,25 +309,88 @@ async function exportToPDF() {
 
         // Top padding de la primera página: 32mm si hay logo, margen normal si no
         var firstPageTopPad = logoHTML ? mmToPx(32) : marginPx;
-        var firstPageH = pageHpx - firstPageTopPad - marginPx - headerH - footerH;
-        var otherPageH = pageHpx - (marginPx * 2) - headerH - footerH;
+        // Buffer de seguridad: la medición off-screen puede diferir
+        // unos píxeles del renderizado final (fuentes, sub-pixel, etc.).
+        // Romper ~10px antes evita que texto se corte al borde de página.
+        var safetyBuffer = 10;
+        var firstPageH = pageHpx - firstPageTopPad - marginPx - headerH - footerH - safetyBuffer;
+        var otherPageH = pageHpx - (marginPx * 2) - headerH - footerH - safetyBuffer;
 
-        // Puntos de corte
+        // Puntos de corte — con soporte para romper tablas entre filas
         var children     = contentWrapper.children;
         var breakPoints  = [0];
         var currentLimit = firstPageH;
         var lastBreak    = 0;
 
+        // getBoundingClientRect es más preciso que offsetTop
+        // para elementos anidados (como filas dentro de tablas)
+        var wrapperRect = contentWrapper.getBoundingClientRect();
+
         for (var i = 0; i < children.length; i++) {
-            var child       = children[i];
-            var childBottom = child.offsetTop + child.offsetHeight;
+            var child     = children[i];
+            var childRect = child.getBoundingClientRect();
+            var childTop  = childRect.top - wrapperRect.top;
+            var childBottom = childTop + childRect.height;
 
             if (childBottom - lastBreak > currentLimit) {
-                var breakAt = child.offsetTop;
-                if (breakAt > lastBreak) {
-                    breakPoints.push(breakAt);
-                    lastBreak    = breakAt;
-                    currentLimit = otherPageH;
+                var tag = child.tagName ? child.tagName.toLowerCase() : '';
+
+                // TABLAS: buscar el mejor corte entre filas en vez de
+                // empujar la tabla entera a la siguiente página.
+                if (tag === 'table') {
+                    var rows = child.querySelectorAll('tr');
+                    var bestBreak = childTop; // fallback: antes de la tabla
+
+                    // Empezar desde fila 2 (mantener header + primera fila juntas)
+                    for (var r = 2; r < rows.length; r++) {
+                        var rowTop = rows[r].getBoundingClientRect().top - wrapperRect.top;
+                        if (rowTop - lastBreak <= currentLimit && rowTop > lastBreak) {
+                            bestBreak = rowTop;
+                        }
+                    }
+
+                    // Fallback: si el loop no encontró corte (header+2 filas no caben),
+                    // verificar si caben header + 1 fila de datos completa.
+                    // Si solo cabe el header sin datos → NO cortar ahí (header solitario
+                    // al fondo de página es inútil), empujar toda la tabla.
+                    if (bestBreak === childTop && rows.length > 2) {
+                        var row2Top = rows[2].getBoundingClientRect().top - wrapperRect.top;
+                        if (row2Top - lastBreak <= currentLimit && row2Top > lastBreak) {
+                            bestBreak = row2Top;
+                        }
+                    }
+
+                    if (bestBreak > lastBreak) {
+                        breakPoints.push(bestBreak);
+                        lastBreak    = bestBreak;
+                        currentLimit = otherPageH;
+
+                        // La tabla puede continuar más allá de esta página.
+                        // Verificar si lo que queda cabe en la siguiente.
+                        var remaining = childBottom - lastBreak;
+                        if (remaining > currentLimit) {
+                            // Buscar otro corte en las filas restantes
+                            for (var r2 = 1; r2 < rows.length; r2++) {
+                                var rt = rows[r2].getBoundingClientRect().top - wrapperRect.top;
+                                var rb = rt + rows[r2].getBoundingClientRect().height;
+                                if (rt >= lastBreak && rb - lastBreak > currentLimit) {
+                                    if (rt > lastBreak) {
+                                        breakPoints.push(rt);
+                                        lastBreak    = rt;
+                                        currentLimit = otherPageH;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // Elementos normales: cortar antes del elemento
+                    var breakAt = childTop;
+                    if (breakAt > lastBreak) {
+                        breakPoints.push(breakAt);
+                        lastBreak    = breakAt;
+                        currentLimit = otherPageH;
+                    }
                 }
             }
         }
